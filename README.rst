@@ -9,7 +9,7 @@ For those who have never used monads but are interested, PyMonad is an easy way 
 Features
 ========
 
-* Easily define curried functions with the ``\@curry`` decorator.
+* Easily define curried functions with the ``@````curry`` decorator.
 * Straight-forward partial application: just pass a curried function the number of arguments you want.
 * Composition of curried functions using ``<<``.
 * Functor, Applicative Functor, and Monad operators: ``<<``, ``&``, and ``>>``.
