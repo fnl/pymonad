@@ -1,12 +1,12 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
 from pymonad.Monad import *
 from pymonad.Monoid import *
 
-class Writer(Monad): 
+class Writer(Monad):
 	"""
 	Represents a context which stores the result of a calculation as well as a log
 	of its activity. The log can be any monoid type, strings being a typical example.
@@ -17,7 +17,7 @@ class Writer(Monad):
 		"""
 		Constructs the Writer object. There are two ways to initialize a Writer object:
 		Pass the value/logMessage pair as a two element tuple (or list), or
-		pass the value and logMessage as two separate arguments. 
+		pass the value and logMessage as two separate arguments.
 
 		"""
 		if not logMessage:
@@ -42,7 +42,7 @@ class Writer(Monad):
 	def amap(self, functorValue):
 		"""
 		Allows normal multi-argument functions to be called with Writer values as the arguments.
-		As with 'fmap' a function applied with 'amap' will preserve any existing log messages 
+		As with 'fmap' a function applied with 'amap' will preserve any existing log messages
 		withing the Writer, but no additional log messages will be added.
 
 		"""
@@ -53,7 +53,7 @@ class Writer(Monad):
 	def bind(self, function):
 		"""
 		Chains together functions which produce Writer instances.
-		Any log messages produced by 'function' are appended to the existing
+		Any log messages produced by `function` are appended to the existing
 		log messages of the arguments.
 
 		"""
@@ -64,10 +64,10 @@ class Writer(Monad):
 	@classmethod
 	def unit(cls, value):
 		"""
-		Returns a Writer instance with 'value' paired with a log message equal
+		Returns a Writer instance with `value` paired with a log message equal
 		to the 'mzero' (see Monoid.py for more information) of the log type.
-		'unit' should not be called with the Writer class directly as it has no
-		default log type. Instead use 'unit' with a subclass of Writer. For instance,
+		`unit` should not be called with the Writer class directly as it has no
+		default log type. Instead use `unit` with a subclass of Writer. For instance,
 			StringWriter.unit(8)
 
 		"""
@@ -77,9 +77,9 @@ class Writer(Monad):
 		"""
 		Returns the result portion of the Writer instance. For example, given
 			x = Writer(8, "initial value")
-			
+
 		x.getResult() will return 8.
-		To get both the result and the log message use 'getValue()'.
+		To get both the result and the log message use `getValue()`.
 
 		"""
 		return self.value[0]
@@ -90,13 +90,13 @@ class Writer(Monad):
 			x = Writer(8, "initial value")
 
 		x.getLog() will return "initial value".
-		To get both the result and the log message use 'getValue()'.
+		To get both the result and the log message use `getValue()`.
 
 		"""
 		return self.value[1]
 
 	def __eq__(self, other):
-		if not isinstance(other, Writer): 
+		if not isinstance(other, Writer):
 			raise TypeError("Can't compare two different types.")
 		else:
 			return super(Writer, self).__eq__(other)

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 #
 # This file contains helper classes and functions to make monad tests more readable and maintainable.
@@ -19,7 +19,7 @@ def plus10(x):
 
 @curry
 def fmap(x, y):
-	return x * y
+	return x << y
 
 @curry
 def revCall(parameter, function):
@@ -48,22 +48,24 @@ class FunctorTester(object):
 	def ensureComparisonRaisesException(self):
 		self.assertRaises(TypeError, self.monads[0].__eq__, self.monads[1])
 
-	def ensure_first_functor_law_holds(self): 
+	def ensure_first_functor_law_holds(self):
 		fmap_ID = self.monad.fmap(identity)
 		ID_functor = identity(self.monad)
 		try: self.assertEqual(fmap_ID, ID_functor)
 		except TypeError: self.assertEqual(fmap_ID(0), ID_functor(0))
 
 	def ensure_second_functor_law_holds(self):
-		fmap_of_composed = (neg * plus10) * self.monad
-		composition_of_fmapped = neg * (plus10 * self.monad)
+		stepwise = neg << plus10
+		stepwise = stepwise << self.monad
+		fmap_of_composed = (neg << plus10) << self.monad
+		composition_of_fmapped = neg << (plus10 << self.monad)
 		try: self.assertEqual(fmap_of_composed, composition_of_fmapped)
 		except TypeError: self.assertEqual(fmap_of_composed(0), composition_of_fmapped(0))
 
 class ApplicativeTester(FunctorTester):
 	def ensure_first_applicative_law_holds(self):
 		x = unit(self.classUnderTest, neg) & self.monad
-		y = neg * self.monad
+		y = neg << self.monad
 		try: self.assertEqual(x, y)
 		except TypeError: self.assertEqual(x(0), y(0))
 

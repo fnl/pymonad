@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
@@ -33,24 +33,21 @@ class ReaderTests(unittest.TestCase):
 		self.assertEqual(sub(3, 2, 1), sub(3, 2)(1))
 		self.assertEqual(sub(3, 2, 1), sub(3)(2)(1))
 		self.assertEqual(sub(3, 2, 1), 0)
-	
+
 	def testReaderFunctor(self):
-		comp1 = neg * sub(4)
-		comp2 = sub(4) * neg
-		comp3 = neg * sub(4) * neg
+		comp1 = neg << sub(4)
+		comp2 = sub(4) << neg
+		comp3 = neg << sub(4) << neg
 		self.assertEqual(comp1(3), -1)
 		self.assertEqual(comp2(3), 7)
 		self.assertEqual(comp3(3), -7)
 
 	def testReaderApplicative(self):
-		x = add * mul(5) & mul(6)
+		x = add << mul(5) & mul(6)
 		self.assertEqual(x(5), 55)
 
 	def testReaderMonad(self):
-		x = (mul(2) >> (lambda a: 
-			 add(10) >> (lambda b: 
-			 Reader(a+b)))
-			)
+		x = (mul(2) >> (lambda a: add(10) >> (lambda b: Reader(a+b))))
 		self.assertEqual(x(3), 19)
 
 class TestReaderUnit(unittest.TestCase):

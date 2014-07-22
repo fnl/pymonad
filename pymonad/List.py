@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
@@ -9,7 +9,7 @@ from pymonad.Monoid import *
 class List(list, Monad, Monoid):
 	"""
 	Represents a non-deterministic calculation or a calculation with more than one possible result.
-	Based on Python's built-in 'list' type, 'List' supports most basic list operations such as 
+	Based on Python's built-in `list` type, `List` supports most basic list operations such as
 	indexing, slicing, etc.
 	"""
 
@@ -27,7 +27,7 @@ class List(list, Monad, Monoid):
 			return True
 		return super(List, self).__ne__(other)
 
-	# For compatibility with python 2...though I thought this was depricated and not necessary.
+	# For compatibility with python 2...though I thought this was deprecated and not necessary.
 	def __getslice__(self, start, end):
 		return self.__getitem__(slice(start, end))
 
@@ -35,7 +35,7 @@ class List(list, Monad, Monoid):
 		if isinstance(key, slice):
 			return List(*super(List, self).__getitem__(key))
 		return super(List, self).__getitem__(key)
-		
+
 	def __str__(self):
 		display = "["
 		for item in self:
@@ -46,39 +46,39 @@ class List(list, Monad, Monoid):
 	def unit(cls, value):
 		return List(value)
 
-	def getValue(self): 
-		""" 
+	def getValue(self):
+		"""
 		Returns the list.
 		This method is mainly to maintain compatibility with other monads,
-		it's not strictly necessary, you can simply operate on the 'List' like
+		it's not strictly necessary, you can simply operate on the `List` like
 		any other list in Python.
 
 		"""
 		return self
 
 	def fmap(self, function):
-		""" Applies 'function' to every element in a List, returning a new List. """
+		""" Applies `function` to every element in a List, returning a new List. """
 		return List(*list(map(function, self)))
 
 	def amap(self, functorValue):
-		""" Applies the function(s) stored in the functor to the contents of the 'functorValue' List. """
+		""" Applies the function(s) stored in the functor to the contents of the `functorValue` List. """
 		result = []
 		for func in self.getValue():
-			result.extend(func * functorValue)
+			result.extend(func << functorValue)
 		return List(*result)
 
-	def bind(self, function): 
-		""" 
-		Applies 'function' to the result of a previous List operation.
-		'function' should accept a single non-List argument and return a new List.
+	def bind(self, function):
+		"""
+		Applies `function` to the result of a previous List operation.
+		`function` should accept a single non-List argument and return a new List.
 		"""
 		result = []
 		for subList in (map(function, self)):
 			result.extend(subList)
 		return List(*result)
 
-	def __rmul__(self, function): 
-		return self.fmap(function)
+	#def __rlshift__(self, function):
+		#return self.fmap(function)
 
 	@staticmethod
 	def mzero():

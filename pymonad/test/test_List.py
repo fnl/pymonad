@@ -1,13 +1,13 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
 import unittest
 from pymonad.Reader import curry
 from pymonad.List import *
-from MonadTester import *
-from MonoidTester import *
+from pymonad.test.MonadTester import *
+from pymonad.test.MonoidTester import *
 
 class TestListFunctor(unittest.TestCase, MonadTester):
 	def __init__(self, x):
@@ -84,7 +84,7 @@ class TestListMonoid(unittest.TestCase, MonoidTester):
 	def test_associativity(self):
 		self.givenMonoids(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))
 		self.ensure_associativity()
-	
+
 	def test_mplus(self):
 		self.givenMonoids(List(1, 2, 3), List(2, 3, 4))
 		self.ensure_mconcat_equals(List(1, 2, 3, 2, 3, 4))

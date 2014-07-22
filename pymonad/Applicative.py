@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
@@ -13,17 +13,17 @@ class Applicative(Functor):
 	"""
 
 	def __init__(self, function):
-		""" Stores 'function' as the functors value. """
+		""" Stores `function` as the functors value. """
 		super(Applicative, self).__init__(function)
 
 	def amap(self, functorValue):
-		""" 
-		Applies the function stored in the functor to the value inside 'functorValue'
+		"""
+		Applies the function stored in the functor to the value inside `functorValue`
 		returning a new functor value.
 
 		"""
 		raise NotImplementedError
 
 	def __and__(self, functorValue):
-		""" The 'amap' operator. """
+		""" The `amap` operator. """
 		return self.amap(functorValue)

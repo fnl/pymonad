@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
@@ -8,9 +8,9 @@ from pymonad.Monad import *
 class State(Monad):
 	""" Represents a calculation which produces a stateful side-effect.  """
 
-	def fmap(self, function): 
+	def fmap(self, function):
 		"""
-		Applies 'function' to the result contained within the monad and passes the state
+		Applies `function` to the result contained within the monad and passes the state
 		along unchanged.
 
 		"""
@@ -22,7 +22,7 @@ class State(Monad):
 
 	def amap(self, functorValue):
 		"""
-		Applies the function contained within the monad to the result of 'functorValue'
+		Applies the function contained within the monad to the result of `functorValue`
 		and passes along the state unchanged.
 
 		"""
@@ -33,10 +33,10 @@ class State(Monad):
 			return (function(value), state)
 		return newState
 
-	def bind(self, function): 
+	def bind(self, function):
 		"""
-		Chains together a series of stateful computations. 'function' accepts a single value
-		and produces a new 'State' value which may or may not alter the state when it is
+		Chains together a series of stateful computations. `function` accepts a single value
+		and produces a new `State` value which may or may not alter the state when it is
 		executed.
 
 		"""
@@ -47,9 +47,9 @@ class State(Monad):
 		return newState
 
 	@classmethod
-	def unit(cls, value): 
+	def unit(cls, value):
 		"""
-		Produces a new stateful calculation which produces 'value' and leaves the passed in 
+		Produces a new stateful calculation which produces `value` and leaves the passed in
 		state untouched.
 
 		"""
@@ -63,9 +63,9 @@ class State(Monad):
 		""" Returns only the final state of a stateful calculation, discarding the result.  """
 		return self.value(state)[1]
 
-	def __call__(self, state): 
+	def __call__(self, state):
 		"""
-		Executes the stateful calculation contained within the monad with an initial 'state'.
+		Executes the stateful calculation contained within the monad with an initial `state`.
 		Returns the result and the final state as a 2-tuple.
 
 		"""

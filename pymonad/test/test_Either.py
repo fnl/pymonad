@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
@@ -48,21 +48,21 @@ class EitherTests(unittest.TestCase):
 		self.assertFalse(Left(7) == Right(7))
 
 	def testEitherFunctor(self):
-		self.assertEqual(neg * Right(7), Right(-7))
-		self.assertEqual(neg * Left("error"), Left("error"))
-		self.assertEqual(head * Right("hello"), Right("h"))
-		self.assertEqual(head * Right([0, 1, 2]), Right(0))
-		self.assertEqual(head * Left("hello"), Left("hello"))
-		self.assertEqual(head * Left([0, 1, 2]), Left([0, 1, 2]))
+		self.assertEqual(neg << Right(7), Right(-7))
+		self.assertEqual(neg << Left("error"), Left("error"))
+		self.assertEqual(head << Right("hello"), Right("h"))
+		self.assertEqual(head << Right([0, 1, 2]), Right(0))
+		self.assertEqual(head << Left("hello"), Left("hello"))
+		self.assertEqual(head << Left([0, 1, 2]), Left([0, 1, 2]))
 
 	def testEitherApplicative(self):
 		@curry
 		def add(x, y): return x + y
 
 		self.assertEqual(Right(add(7)) & Right(8), Right(15))
-		self.assertEqual(add * Right(7) & Right(8), Right(15))
-		self.assertEqual(add * Right(7) & Left("error"), Left("error"))
-		self.assertEqual(add * Left("error") & Right(8), Left("error"))
+		self.assertEqual(add << Right(7) & Right(8), Right(15))
+		self.assertEqual(add << Right(7) & Left("error"), Left("error"))
+		self.assertEqual(add << Left("error") & Right(8), Left("error"))
 
 	def testEitherMonad(self):
 		self.assertEqual(Right(7) >> add(7) >> div(2), Right(7))
@@ -71,7 +71,7 @@ class EitherTests(unittest.TestCase):
 		self.assertEqual(Right(7) >> m_neg >> add(7), Right(0))
 		self.assertEqual(Right("hello") >> m_neg, Left("error"))
 		self.assertEqual(Left("Short-circuit") >> add(7) >> m_neg >> add(6) >> div(2) >> div(0), Left("Short-circuit"))
-	
+
 	def testBindReturnsMonad(self):
 		self.assertRaises(TypeError, Right(7).__rshift__, lambda x: 9)
 		self.assertRaises(TypeError, Right(7).__rshift__, 9)

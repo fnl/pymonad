@@ -1,13 +1,13 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
 import unittest
 from pymonad.Maybe import Maybe, Just, First, Last, _Nothing, Nothing
 from pymonad.Reader import curry
-from MonadTester import *
-from MonoidTester import *
+from pymonad.test.MonadTester import *
+from pymonad.test.MonoidTester import *
 
 class TestJustFunctor(unittest.TestCase, MonadTester):
 	def __init__(self, x):
@@ -127,7 +127,7 @@ class TestMaybeMonoid(unittest.TestCase, MonoidTester):
 	def test_associativity(self):
 		self.givenMonoids(Just(1), Just(2), Just(3))
 		self.ensure_associativity()
-	
+
 	def test_mplus_with_two_just_values(self):
 		self.givenMonoids(Just(1), Just(2))
 		self.ensure_mconcat_equals(Just(3))
@@ -153,7 +153,7 @@ class TestFirstMonoid(unittest.TestCase, MonoidTester):
 	def test_associativity(self):
 		self.givenMonoids(First(Just(1)), First(Just(2)), First(Just(3)))
 		self.ensure_associativity()
-	
+
 	def test_mplus_with_two_just_values(self):
 		self.givenMonoids(First(Just(1)), First(Just(2)))
 		self.ensure_mconcat_equals(First(Just(1)))
@@ -183,7 +183,7 @@ class TestLastMonoid(unittest.TestCase, MonoidTester):
 	def test_associativity(self):
 		self.givenMonoids(Last(Just(1)), Last(Just(2)), Last(Just(3)))
 		self.ensure_associativity()
-	
+
 	def test_mplus_with_two_just_values(self):
 		self.givenMonoids(Last(Just(1)), Last(Just(2)))
 		self.ensure_mconcat_equals(Last(Just(2)))

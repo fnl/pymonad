@@ -1,11 +1,11 @@
 # --------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 # --------------------------------------------------------
 
 import unittest
 from pymonad.Writer import *
-from MonadTester import *
+from pymonad.test.MonadTester import *
 from pymonad.Maybe import Just
 
 class TestWriterFunctor(unittest.TestCase, MonadTester):

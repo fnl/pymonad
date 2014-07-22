@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------
-# (c) Copyright 2014 by Jason DeLaat. 
+# (c) Copyright 2014 by Jason DeLaat.
 # Licensed under BSD 3-clause licence.
 #
 # These classes are helper classes to make the actual monoid test cases more readable.
